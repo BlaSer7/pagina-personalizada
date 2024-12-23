@@ -1,0 +1,5 @@
+Flask
+Flask-Cors
+selenium
+mysql-connector-python
+webdriver-manager
