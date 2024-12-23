@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUSTOM FASHION</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+    
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(120deg, #2b2b2b, #1f4037, #99f2c8);
+            background-size: cover;
+            color: #fff;
+            padding: 10px;
+        }
+    
+        .login-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+    
+        .logo {
+            margin-bottom: 30px;
+        }
+    
+        h2 {
+            color: #99f2c8;
+            margin-bottom: 10px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+    
+        .subtitle {
+            color: #99f2c8;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+    
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #99f2c8;
+            font-weight: 500;
+        }
+    
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(153, 242, 200, 0.4);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+    
+        input:focus {
+            outline: none;
+            border-color: #99f2c8;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(153, 242, 200, 0.4);
+        }
+    
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #99f2c8;
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(153, 242, 200, 0.3);
+        }
+    
+        button:hover {
+            background: #1f4037;
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(153, 242, 200, 0.5);
+        }
+    
+        .links {
+            margin-top: 25px;
+        }
+    
+        .links a {
+            color: #99f2c8;
+            text-decoration: none;
+            font-size: 14px;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+    
+        .links a:hover {
+            color: #fff;
+        }
+    
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 20px;
+                border-radius: 10px;
+            }
+    
+            h2 {
+                font-size: 22px;
+            }
+    
+            .subtitle {
+                font-size: 14px;
+            }
+    
+            button {
+                font-size: 14px;
+                padding: 12px;
+            }
+    
+            input {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+    </style>
+    
+    
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <svg width="120" height="120" viewBox="0 0 120 120">
+                <path class="tshirt" d="M30,30 L50,20 L70,20 L90,30 L80,45 L70,40 L70,100 L50,100 L50,40 L40,45 L30,30"/>
+                <path class="brush" d="M60,50 Q65,45 70,50 Q75,55 70,60 L65,65 Q60,70 55,65 L60,50 M65,65 L55,75"/>
+            </svg>
+        </div>
+        <h2>CUSTOM FASHION</h2>
+        <p class="subtitle">Inicia sesión</p>
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">Usuario</label>
+                <input type="text" id="username" placeholder="Ingresa tu nombre de usuario" required>
+                <div class="error" id="usernameError">El usuario debe tener al menos 3 caracteres</div>
+            </div>
+            <div class="input-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" placeholder="Ingresa tu contraseña" required>
+                <div class="error" id="passwordError">La contraseña debe tener al menos 6 caracteres</div>
+            </div>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+        <div class="links">
+            <a href="registro.html">Crear cuenta</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const usernameError = document.getElementById('usernameError');
+            const passwordError = document.getElementById('passwordError');
+
+            usernameError.style.display = 'none';
+            passwordError.style.display = 'none';
+
+            let hasError = false;
+
+            if (!username || username.length < 3) {
+                usernameError.style.display = 'block';
+                hasError = true;
+            }
+
+            if (!password || password.length < 6) {
+                passwordError.style.display = 'block';
+                hasError = true;
+            }
+
+            if (!hasError) {
+                alert('¡Bienvenido a Custom Fashion');
+                window.location.href = 'pagina2.html';
+            }
+        });
+    </script>
+</body>
+</html>

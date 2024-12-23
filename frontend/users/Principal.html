@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tienda de poleras personalizadas. Descubre productos únicos y personalizados para todos los gustos.">
+    <meta name="keywords" content="ropa personalizada, poleras, diseños únicos, tienda en línea">
+    <meta name="author" content="personalizarte">
+    <title>Tienda de Poleras Personalizadas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB13UKcLHJva1goO_-W7_nbVgzYRSoxcTU"></script>
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <!-- Encabezado principal -->
+    <header class="head">
+        <div class="logo">
+            <a href="#">
+                <img src="img/buricero.png" alt="buri" class="logo-img"> S.A.
+            </a>
+        </div>
+        <nav class="navbar">
+            <a href="#inicio">Inicio</a>
+            <a href="#nosotros">Nosotros</a>
+            <a href="#contacto">Contacto</a>
+            <a href="Login.html">Ingresar</a>
+            
+               
+        
+            </a>
+        </nav>
+    </header>
+
+    <!-- Sección principal -->
+    <section id="inicio" class="content header">
+        <h1 class="title">Disfrute de la ropa personalizada</h1>
+        <p>Descubre las mejores poleras personalizadas y crea un diseño único para ti.</p>
+        <div class="btn-home">
+            <a href="#productos" class="btn">Explorar</a>
+            <a href="#contacto" class="btn">Contáctanos</a>
+        </div>
+    </section>
+
+    <!-- Sección de productos -->
+    <section id="productos" class="content sau">
+        <h2 class="title">Productos</h2>
+        <p>Ofrecemos una variedad de poleras con diseños modernos y opciones de personalización.</p>
+        <div class="box-container">
+            <div class="box">
+                <i class="fas fa-tshirt"></i>
+                <h3>Diseño Moderno</h3>
+                <p>Poleras con estilos únicos</p>
+                <button class="add-to-cart-btn" data-product="Diseño Moderno" data-price="15">Agregar al carrito</button>
+            </div>
+            <div class="box">
+                <i class="fas fa-palette"></i>
+                <h3>Personalización</h3>
+                <p>Elige colores, diseños y añade texto a tu gusto</p>
+                <button class="add-to-cart-btn" data-product="Personalización" data-price="20">Agregar al carrito</button>
+            </div>
+            <div class="box">
+                <i class="fas fa-star"></i>
+                <h3>Calidad Premium</h3>
+                <p>Materiales cómodos y duraderos para el uso diario</p>
+                <button class="add-to-cart-btn" data-product="Calidad Premium" data-price="25">Agregar al carrito</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección sobre nosotros -->
+    <section id="nosotros" class="content about">
+        <h2 class="title">Sobre Nosotros</h2>
+        <p>Somos una empresa dedicada a ofrecer productos personalizados de alta calidad. Nuestro objetivo es ayudarte a expresar tu estilo único a través de nuestras poleras.</p>
+        <a href="#contacto" class="btn">Saber Más</a>
+    </section>
+
+    <!-- Sección de precios -->
+    <section id="precios" class="content price">
+        <h2 class="title">Precios</h2>
+        <p>Conoce nuestras tarifas competitivas para productos personalizados. Ofrecemos calidad a un precio justo.</p>
+        <a href="#contacto" class="btn">Consultar Precios</a>
+    </section>
+
+    <!-- Sección de contacto -->
+    <section id="contacto" class="content contact">
+        <h2 class="title">Contáctanos</h2>
+        <p>Para más información, comunícate con nosotros al siguiente número:</p>
+        <p><strong>Teléfono:</strong> 76673951</p>
+        <div id="map" style="width: 100%; height: 400px; border-radius: 10px;"></div>
+    </section>
+
+    <!-- Modal del carrito -->
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-content">
+            <h3>Carrito de Compras</h3>
+            <ul id="cart-items"></ul>
+            <p>Total: $<span id="cart-total">0</span></p>
+            <button id="close-cart">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="social-media">
+                <a href="https://www.facebook.com/RealMadrid/?locale=es_LA" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/vinijr/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://x.com/realmadrid?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://youtu.be/Spy-HcAQPOY?si=4NdpM7R4cNA2MX5Y" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+            <div class="logo-footer">
+                <img src="img/buricero.png" alt="Logo de Personalizarte" class="footer-logo">
+            </div>
+        </div>
+        <p>&copy; 2024 Tienda de Ropa Personalizada. Todos los derechos reservados.</p>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bandeja de Pedidos</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom, #eef2f3, #d9e8f5);
+            margin: 0;
+            padding: 20px;
+        }
+    
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            color: #007bff;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+        }
+    
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+    
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+    
+        th {
+            background: linear-gradient(90deg, #007bff, #0056b3);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    
+        tr:hover {
+            background-color: #e6f7ff;
+            cursor: pointer;
+        }
+    
+        .center {
+            text-align: center;
+        }
+    
+        /* Botones */
+        .btn {
+            padding: 8px 12px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    
+        .btn.complete {
+            background-color: #28a745;
+        }
+    
+        .btn.complete:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(40, 167, 69, 0.3);
+        }
+    
+        .btn.delete {
+            background-color: #dc3545;
+        }
+    
+        .btn.delete:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(220, 53, 69, 0.3);
+        }
+    </style>
+    
+</head>
+<body>
+    <h1>Bandeja de Pedidos</h1>
+    <table>
+        <thead>
+            <tr>
+              
+                <th>Cliente</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th>Producto</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Talla</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="pedidosTable">
+            <!-- Los pedidos se cargarán dinámicamente aquí -->
+        </tbody>
+    </table>
+
+    <script>
+        // Función para cargar pedidos desde el servidor
+        function cargarPedidos() {
+            fetch("http://127.0.0.1:8080/admin/orders/list", {
+                method: "GET",
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Error al obtener los pedidos");
+                }
+                return response.json();
+            })
+            .then(data => {
+                const pedidosTable = document.getElementById("pedidosTable");
+                pedidosTable.innerHTML = ""; // Limpiar tabla antes de agregar filas
+
+                data.forEach(pedido => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                       
+                        <td>${pedido.nombre_cliente} ${pedido.apellido_cliente}</td>
+                        <td>${pedido.telefono}</td>
+                        <td>${pedido.direccion}</td>
+                        <td>${pedido.nombre_producto}</td>
+                        <td>${pedido.descripcion_producto}</td>
+                        <td>${pedido.precio_producto}</td>
+                        <td>${pedido.talla_producto}</td>
+                        <td class="center">
+                            <button class="btn complete" onclick="marcarCompleto(${pedido.id})">Completar</button>
+                            <button class="btn delete" onclick="eliminarPedido(${pedido.id})">Eliminar</button>
+                        </td>
+                    `;
+                    pedidosTable.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error("Error al cargar pedidos:", error);
+                alert("Error al cargar los pedidos.");
+            });
+        }
+
+        // Función para marcar un pedido como completado
+        function marcarCompleto(id) {
+            alert(`Pedido ID ${id} marcado como completado.`);
+            // Aquí puedes implementar la lógica para actualizar el estado en el backend
+            cargarPedidos(); // Actualizar la tabla
+        }
+
+        // Función para eliminar un pedido
+        function eliminarPedido(id) {
+            const confirmacion = confirm(`¿Estás seguro de eliminar el pedido ID ${id}?`);
+            if (confirmacion) {
+                fetch(`http://127.0.0.1:8080/admin/orders/delete/${id}`, {
+                    method: "DELETE",
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Error al eliminar el pedido");
+                    }
+                    alert("Pedido eliminado exitosamente.");
+                    cargarPedidos(); // Actualizar la tabla
+                })
+                .catch(error => {
+                    console.error("Error al eliminar pedido:", error);
+                    alert("Error al eliminar el pedido.");
+                });
+            }
+        }
+
+        // Cargar los pedidos al cargar la página
+        cargarPedidos();
+    </script>
+</body>
+</html>

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto+Slab:wght@400&display=swap" rel="stylesheet">
+    <title>Ventas</title>
+    <style>
+        /* Estilo global */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #2b2b2b, #1f4037, #99f2c8);
+            color: #fff;
+        }
+    
+        /* Contenedor general */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+    
+        /* Tarjetas de producto */
+        .product-card {
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 1s ease-out forwards;
+        }
+    
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+    
+        .product-card:hover img {
+            transform: scale(1.1);
+        }
+    
+        /* Sección de tallas */
+        .sizes {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px 0;
+            background: #f9f9f9;
+        }
+    
+        .sizes button {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+    
+        .sizes button:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
+        }
+    
+        .sizes button.selected {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+    
+        /* Detalles del producto */
+        .details {
+            padding: 15px;
+            text-align: center;
+        }
+    
+        .details h3 {
+            margin: 10px 0;
+            font-size: 18px;
+            color: #333;
+        }
+    
+        .details p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #666;
+        }
+    
+        .details .price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #28a745;
+            margin: 15px 0;
+        }
+    
+        /* Botón de agregar al carrito */
+        .add-to-cart-from-cart {
+            margin-top: 15px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+    
+        .add-to-cart:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    
+        /* Formulario del carrito */
+        .cart-form {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            background: #fff;
+            color: #333;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+    
+        .cart-form h3 {
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+    
+        .cart-form p {
+            font-size: 14px;
+            margin: 10px 0;
+        }
+    
+        .cart-form button {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+    
+        .cart-form button:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    
+        .modal-content {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            width: 400px;
+            text-align: center;
+        }
+    
+        .modal-content h3 {
+            color: #99f2c8;
+            margin-top: 0;
+        }
+    
+        .modal-content input,
+        .modal-content textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    
+        .modal-content button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+    
+        .modal-content button:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+        .close-modal {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        background: none;
+        border: none;
+        color: #333;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .close-modal:hover {
+        color: #ff6b6b;
+    }
+
+    .modal-content {
+        position: relative; /* Para posicionar el botón dentro del modal */
+    }
+         /* Carrito flotante */
+    .cart-icon {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        z-index: 1000;
+        transition: transform 0.2s ease, background-color 0.3s ease;
+    }
+
+    .cart-icon:hover {
+        background-color: #0056b3;
+        transform: scale(1.1);
+    }
+
+    .cart-icon i {
+        font-size: 24px;
+    }
+
+    /* Contador de pedidos */
+    .cart-icon #cartCount {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #ff6b6b;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    
+        /* Títulos principales */
+        .main-title {
+            font-size: 3em;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            color: #99f2c8;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: fadeIn 2s ease-out;
+        }
+    
+        /* Animaciones */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    
+    
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    
+    <h1 class="main-title">Productos Disponibles</h1>
+    <div class="container">
+       <!-- Aqui empeiza la Tarjeta de las poleras -->
+       <div class="product-card">
+    <img src="img/producto1.jpg" alt="Producto 1">
+    <div class="sizes">
+        <button onclick="selectSize(this)">S</button>
+        <button onclick="selectSize(this)">M</button>
+        <button onclick="selectSize(this)">L</button>
+        <button onclick="selectSize(this)">XL</button>
+    </div>
+    <div class="details">
+        <h3 class="product-name">Producto 1</h3>
+        <p class="product-description">Descripción del producto 1</p>
+        <p class="price">Bs120.00</p>
+        <button onclick="addToCartFromCard(this)">Agregar al Carrito</button>
+    </div>
+</div>
+
+    
+    <div class="product-card">
+        <img src="img/producto2.jpg" alt="Producto 2">
+        <div class="sizes">
+            <button onclick="selectSize('S', 'Producto 2')">S</button>
+            <button onclick="selectSize('M', 'Producto 2')">M</button>
+            <button onclick="selectSize('L', 'Producto 2')">L</button>
+            <button onclick="selectSize('XL', 'Producto 2')">XL</button>
+            <button onclick="selectSize('XXL', 'Producto 2')">XXL</button>
+            <button onclick="selectSize('XXXL', 'Producto 2')">XXXL</button>
+        </div>
+        <div class="details">
+            <h3 class="product-name">Polera</h3>
+            <p class="product-description">Polera oscura lista para personalizacion</p>
+            <p class="price">Bs150.00</p>
+            <button class="add-to-cart" onclick="addToCartFromCard(this)">Agregar al Carrito</button>
+        </div>
+    </div>
+    
+    <div class="product-card">
+        <img src="img/producto3.jpg" alt="Producto 3">
+        <div class="sizes">
+            <button onclick="selectSize('S', 'Producto 3')">S</button>
+            <button onclick="selectSize('M', 'Producto 3')">M</button>
+            <button onclick="selectSize('L', 'Producto 3')">L</button>
+            <button onclick="selectSize('XL', 'Producto 3')">XL</button>
+            <button onclick="selectSize('XXL', 'Producto 3')">XXL</button>
+            <button onclick="selectSize('XXXL', 'Producto 3')">XXXL</button>
+        </div>
+        <div class="details">
+            <h3 class="product-name">Polera </h3>
+            <p class="product-description">Polera The Punisher</p>
+            <p class="price">Bs130.00</p>
+            <button class="add-to-cart" onclick="addToCartFromCard(this)">Agregar al Carrito</button>
+        </div>
+    </div>
+    
+    <div class="product-card">
+        <img src="img/producto3.1.jpg" alt="Producto 4">
+        <div class="sizes">
+            <button onclick="selectSize('S', 'Producto 4')">S</button>
+            <button onclick="selectSize('M', 'Producto 4')">M</button>
+            <button onclick="selectSize('L', 'Producto 4')">L</button>
+            <button onclick="selectSize('XL', 'Producto 4')">XL</button>
+            <button onclick="selectSize('XXL', 'Producto 4')">XXL</button>
+            <button onclick="selectSize('XXXL', 'Producto 4')">XXXL</button>
+        </div>
+        <div class="details">
+            <h3 class="product-name">Producto 4</h3>
+            <p class="product-description">Descripción del producto 4</p>
+            <p class="price">Bs140.00</p>
+            <button class="add-to-cart" onclick="addToCartFromCard(this)">Agregar al Carrito</button>
+        </div>
+    </div>
+    
+    <div class="product-card">
+        <img src="img/producto5.jpeg" alt="Producto 5">
+        <div class="sizes">
+            <button onclick="selectSize('S', 'Producto 5')">S</button>
+            <button onclick="selectSize('M', 'Producto 5')">M</button>
+            <button onclick="selectSize('L', 'Producto 5')">L</button>
+            <button onclick="selectSize('XL', 'Producto 5')">XL</button>
+            <button onclick="selectSize('XXL', 'Producto 5')">XXL</button>
+            <button onclick="selectSize('XXXL', 'Producto 5')">XXXL</button>
+        </div>
+        <div class="details">
+            <h3 class="product-name">Producto 5</h3>
+            <p class="product-description">Descripción del producto 5</p>
+            <p class="price">Bs100.00</p>
+            <button class="add-to-cart" onclick="addToCartFromCard(this)">Agregar al Carrito</button>
+        </div>
+    </div>
+    
+    <div class="product-card">
+        <img src="img/producto6.jpg" alt="Producto 6">
+        <div class="sizes">
+            <button onclick="selectSize('S', 'Producto 6')">S</button>
+            <button onclick="selectSize('M', 'Producto 6')">M</button>
+            <button onclick="selectSize('L', 'Producto 6')">L</button>
+            <button onclick="selectSize('XL', 'Producto 6')">XL</button>
+            <button onclick="selectSize('XXL', 'Producto 6')">XXL</button>
+            <button onclick="selectSize('XXXL', 'Producto 6')">XXXL</button>
+        </div>
+        <div class="details">
+            <h3 class="product-name">Producto 6</h3>
+            <p class="product-description">Descripción del producto 6</p>
+            <p class="price">Bs110.00</p>
+            <button class="add-to-cart" onclick="addToCartFromCard(this)">Agregar al Carrito</button>
+        </div>
+    </div>
+    
+    <div class="product-card">
+        <img src="img/producto7.png" alt="Producto 7">
+        <div class="sizes">
+            <button onclick="selectSize('S', 'Producto 7')">S</button>
+            <button onclick="selectSize('M', 'Producto 7')">M</button>
+            <button onclick="selectSize('L', 'Producto 7')">L</button>
+            <button onclick="selectSize('XL', 'Producto 7')">XL</button>
+            <button onclick="selectSize('XXL', 'Producto 7')">XXL</button>
+            <button onclick="selectSize('XXXL', 'Producto 7')">XXXL</button>
+        </div>
+        <div class="details">
+            <h3 class="product-name">Producto 7</h3>
+            <p class="product-description">Descripción del producto 7</p>
+            <p class="price">Bs90.00</p>
+            <button class="add-to-cart" onclick="addToCartFromCard(this)">Agregar al Carrito</button>
+        </div>
+    </div>
+    
+    <div class="product-card">
+        <img src="img/producto8.jpg" alt="Producto 8">
+        <div class="sizes">
+            <button onclick="selectSize('S', 'Producto 8')">S</button>
+            <button onclick="selectSize('M', 'Producto 8')">M</button>
+            <button onclick="selectSize('L', 'Producto 8')">L</button>
+            <button onclick="selectSize('XL', 'Producto 8')">XL</button>
+            <button onclick="selectSize('XXL', 'Producto 8')">XXL</button>
+            <button onclick="selectSize('XXXL', 'Producto 8')">XXXL</button>
+        </div>
+        <div class="details">
+            <h3 class="product-name">Producto 8</h3>
+            <p class="product-description">Descripción del producto 8</p>
+            <p class="price">Bs85.00</p>
+            <button class="add-to-cart" onclick="addToCartFromCard(this)">Agregar al Carrito</button>
+        </div>
+    </div>
+
+    <div class="product-card">
+        <img src="img/producto9.jpg" alt="Producto 8">
+        <div class="sizes">
+            <button onclick="selectSize('S', 'Producto 8')">S</button>
+            <button onclick="selectSize('M', 'Producto 8')">M</button>
+            <button onclick="selectSize('L', 'Producto 8')">L</button>
+            <button onclick="selectSize('XL', 'Producto 8')">XL</button>
+            <button onclick="selectSize('XXL', 'Producto 8')">XXL</button>
+            <button onclick="selectSize('XXXL', 'Producto 8')">XXXL</button>
+        </div>
+        <div class="details">
+            <h3 class="product-name">Producto 8</h3>
+            <p class="product-description">Descripción del producto 8</p>
+            <p class="price">Bs85.00</p>
+            <button class="add-to-cart" onclick="addToCartFromCard(this)">Agregar al Carrito</button>
+        </div>
+    </div>
+
+    <div class="product-card">
+        <img src="img/paroducto10.webp" alt="Producto 8">
+        <div class="sizes">
+            <button onclick="selectSize('S', 'Producto 8')">S</button>
+            <button onclick="selectSize('M', 'Producto 8')">M</button>
+            <button onclick="selectSize('L', 'Producto 8')">L</button>
+            <button onclick="selectSize('XL', 'Producto 8')">XL</button>
+            <button onclick="selectSize('XXL', 'Producto 8')">XXL</button>
+            <button onclick="selectSize('XXXL', 'Producto 8')">XXXL</button>
+        </div>
+        <div class="details">
+            <h3 class="product-name">Producto 8</h3>
+            <p class="product-description">Descripción del producto 8</p>
+            <p class="price">Bs85.00</p>
+            <button class="add-to-cart" onclick="addToCartFromCard(this)">Agregar al Carrito</button>
+        </div>
+    </div>
+
+    <div class="product-card">
+        <img src="img/producto11.jpg" alt="Producto 8">
+        <div class="sizes">
+            <button onclick="selectSize('S', 'Producto 8')">S</button>
+            <button onclick="selectSize('M', 'Producto 8')">M</button>
+            <button onclick="selectSize('L', 'Producto 8')">L</button>
+            <button onclick="selectSize('XL', 'Producto 8')">XL</button>
+            <button onclick="selectSize('XXL', 'Producto 8')">XXL</button>
+            <button onclick="selectSize('XXXL', 'Producto 8')">XXXL</button>
+        </div>
+        <div class="details">
+            <h3 class="product-name">Producto 8</h3>
+            <p class="product-description">Descripción del producto 8</p>
+            <p class="price">Bs85.00</p>
+            <button class="add-to-cart" onclick="addToCartFromCard(this)">Agregar al Carrito</button>
+        </div>
+    </div>
+
+    <div class="product-card">
+        <img src="img/producto12.jpg" alt="Producto 8">
+        <div class="sizes">
+            <button onclick="selectSize('S', 'Producto 8')">S</button>
+            <button onclick="selectSize('M', 'Producto 8')">M</button>
+            <button onclick="selectSize('L', 'Producto 8')">L</button>
+            <button onclick="selectSize('XL', 'Producto 8')">XL</button>
+            <button onclick="selectSize('XXL', 'Producto 8')">XXL</button>
+            <button onclick="selectSize('XXXL', 'Producto 8')">XXXL</button>
+        </div>
+        <div class="details">
+            <h3 class="product-name">Producto 8</h3>
+            <p class="product-description">Descripción del producto 8</p>
+            <p class="price">Bs85.00</p>
+            <button class="add-to-cart" onclick="addToCartFromCard(this)">Agregar al Carrito</button>
+        </div>
+    </div>
+      <!-- Hasta aqui las tarjetas de las poleras  -->
+
+
+   <!-- Ícono flotante del carrito -->
+<div class="cart-icon" onclick="viewCart()">
+    <i class="fas fa-shopping-cart"></i>
+    <span id="cartCount">0</span>
+</div>
+  <!-- Modal para el carrito -->
+  <div class="modal" id="cartModal">
+    <div class="modal-content">
+        <button class="close-modal" onclick="closeCartModal()">×</button>
+        <h3>Carrito de Compras</h3>
+        <ul id="cartItems"></ul>
+        <h4>Datos del Cliente</h4>
+        <input type="text" id="customerName" placeholder="Nombre" required>
+        <input type="text" id="customerLastName" placeholder="Apellido" required>
+        <input type="text" id="customerPhone" placeholder="Teléfono" required>
+        <textarea id="customerAddress" placeholder="Dirección" required></textarea>
+        <button onclick="finalizeOrder()">Finalizar Pedido</button>
+    </div>
+</div>
+
+
+<script>
+    const cart = [];
+
+function addToCartFromCard(button) {
+    const card = button.closest('.product-card');
+    const productName = card.querySelector('.product-name').innerText;
+    const productDescription = card.querySelector('.product-description').innerText;
+    const productPrice = card.querySelector('.price').innerText.replace('Bs', '');
+    const sizeButtons = card.querySelectorAll('.sizes button');
+    const selectedSize = Array.from(sizeButtons).find(btn => btn.classList.contains('selected'));
+
+    if (!selectedSize) {
+        alert(`Por favor selecciona una talla para ${productName} antes de agregarlo al carrito.`);
+        return;
+    }
+
+    const existingProduct = cart.find(
+        item => item.productName === productName && item.productSize === selectedSize.innerText
+    );
+
+    if (existingProduct) {
+        alert(`${productName} con talla ${selectedSize.innerText} ya está en el carrito.`);
+    } else {
+        cart.push({
+            productName,
+            productPrice: parseFloat(productPrice),
+            productDescription,
+            productSize: selectedSize.innerText
+        });
+        alert(`${productName} añadido al carrito con talla ${selectedSize.innerText}.`);
+        updateCartCount();
+    }
+}
+
+function updateCartCount() {
+    const cartCount = document.getElementById('cartCount');
+    cartCount.innerText = cart.length; // Actualiza el número de productos en el carrito
+}
+
+function selectSize(button) {
+    // Limpiar selección previa
+    const sizeButtons = button.closest('.sizes').querySelectorAll('button');
+    sizeButtons.forEach(btn => btn.classList.remove('selected'));
+
+    // Marcar el botón seleccionado
+    button.classList.add('selected');
+}
+
+
+    const existingProduct = cart.find(item => item.productName === productName);
+    if (existingProduct) {
+        alert(`${productName} ya está en el carrito.`);
+    } else {
+        cart.push({
+            productName,
+            productPrice: parseFloat(productPrice), // Convertir a número
+            productDescription,
+            productSize: selectedSize // Agregar la talla seleccionada al carrito
+        });
+        alert(`${productName} añadido al carrito con talla ${selectedSize}.`);
+        // Limpiar la talla seleccionada después de agregar al carrito
+        delete selectedSizes[productName];
+    }
+
+
+    function viewCart() {
+        const cartItems = document.getElementById('cartItems');
+        cartItems.innerHTML = cart
+            .map(
+                (item, index) => `
+                <li>
+                    ${item.productName} - ${item.productPrice} - ${item.productDescription} 
+                    ${item.productSize ? `, Talla: ${item.productSize}` : ', Sin talla seleccionada'}
+                    <button onclick="removeFromCart(${index})" style="margin-left: 10px; color: red;">Eliminar</button>
+                </li>`
+            )
+            .join('');
+        cartModal.style.display = 'flex';
+    }
+
+    function removeFromCart(index) {
+        if (confirm('¿Deseas eliminar este producto del carrito?')) {
+            cart.splice(index, 1);
+            viewCart(); // Actualizar la vista del carrito
+        }
+    }
+
+    async function finalizeOrder() {
+    const customerName = document.getElementById('customerName').value;
+    const customerLastName = document.getElementById('customerLastName').value;
+    const customerPhone = document.getElementById('customerPhone').value;
+    const customerAddress = document.getElementById('customerAddress').value;
+
+    if (!customerName || !customerLastName || !customerPhone || !customerAddress) {
+        alert('Por favor completa todos los campos.');
+        return;
+    }
+
+    if (cart.some(item => !item.productSize)) {
+        alert('Por favor selecciona una talla para todos los productos.');
+        return;
+    }
+
+    const orderData = {
+        customerName,
+        customerLastName,
+        customerPhone,
+        customerAddress,
+        cart: cart.map(item => ({
+            productName: item.productName,
+            productPrice: parseFloat(item.productPrice), // Asegurarse de que sea un número
+            productDescription: item.productDescription,
+            productSize: item.productSize
+        }))
+    };
+
+    console.log("Datos del pedido enviados al backend:", orderData);
+
+    try {
+        const response = await fetch('http://127.0.0.1:8080/orders/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData),
+        });
+
+        const result = await response.json();
+        if (response.status === 201) {
+            alert(result.message);
+            cart.length = 0; // Vaciar el carrito
+            cartModal.style.display = 'none';
+        } else {
+            alert('Error al registrar el pedido: ' + result.message);
+        }
+    } catch (error) {
+        console.error('Error al enviar pedido:', error);
+        alert('No se pudo conectar con el servidor.');
+    }
+}
+
+
+    window.addEventListener('click', (e) => {
+        if (e.target === cartModal) {
+            cartModal.style.display = 'none';
+        }
+    });
+</script>
+
+
+
+    
+    
+</body>
+</html>

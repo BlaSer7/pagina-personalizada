@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(120deg, #2b2b2b, #1f4037, #99f2c8);
+            background-size: cover;
+            color: #fff;
+        }
+    
+        .form-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            width: 350px;
+            text-align: center;
+        }
+    
+        h2 {
+            text-align: center;
+            color: #99f2c8;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+    
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid rgba(153, 242, 200, 0.4);
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+    
+        input:focus {
+            outline: none;
+            border-color: #99f2c8;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(153, 242, 200, 0.4);
+        }
+    
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #99f2c8;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(153, 242, 200, 0.3);
+        }
+    
+        button:hover {
+            background-color: #1f4037;
+            color: #fff;
+            box-shadow: 0 8px 25px rgba(153, 242, 200, 0.5);
+            transform: translateY(-2px);
+        }
+    
+        .message {
+            text-align: center;
+            color: #ff6a88;
+            margin-top: 10px;
+        }
+    
+        .links {
+            text-align: center;
+            margin-top: 25px;
+        }
+    
+        .links a {
+            color: #99f2c8;
+            text-decoration: none;
+            font-size: 14px;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+    
+        .links a:hover {
+            color: #fff;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="form-container">
+        <h2>Crear Cuenta</h2>
+        <form id="registerForm">
+            <input type="text" id="username" placeholder="Nombre de Usuario" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <input type="email" id="email" placeholder="Correo Electrónico" required>
+            <button type="submit">Registrarse</button>
+            <div class="links">
+                <a href="Login.html">Volver a Inicio</a>
+            </div>
+           
+        </form>
+        <div class="message" id="responseMessage"></div>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = {
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value,
+                email: document.getElementById('email').value
+            };
+
+            try {
+                const response = await fetch('http://127.0.0.1:8080/user/register', { // Cambié la URL al backend
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+                const responseMessage = document.getElementById('responseMessage');
+
+                if (response.status === 201) {
+                    responseMessage.style.color = 'green';
+                    responseMessage.innerText = result.message;
+                } else {
+                    responseMessage.style.color = 'red';
+                    responseMessage.innerText = result.message;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('responseMessage').innerText = "Error al conectar con el servidor";
+            }
+        });
+    </script>
+</body>
+</html>

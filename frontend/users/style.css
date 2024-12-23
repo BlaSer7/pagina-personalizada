@@ -1,0 +1,367 @@
+/* Variables de colores y tamaños */
+:root {
+    --primary-color: #37b88d;
+    --secondary-color: #171717;
+    --text-color: #fff;
+    --hover-color: #3f3f3f;
+}
+
+/* Reset general */
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+body {
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--text-color);
+    background-color: var(--secondary-color);
+}
+
+/* Estilos del encabezado */
+.head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    background: var(--secondary-color);
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+}
+
+.navbar {
+    display: flex;
+    margin-right: 10px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+}
+
+.logo a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 20px;
+    text-transform: lowercase;
+}
+
+.logo-img {
+    height: 50px;
+    margin-right: 20px;
+}
+
+.navbar a {
+    display: block;
+    padding: 10px 10px;
+    color: var(--text-color);
+    font-size: 20px;
+    text-decoration: none;
+    text-transform: lowercase;
+}
+
+.navbar a:hover {
+    background: var(--hover-color);
+}
+
+/* Sección principal */
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    background: url(img/fondo.jpg) no-repeat center;
+    background-size: cover;
+}
+
+.title {
+    margin-bottom: 100px;
+    font-size: 60px;
+    font-weight: 600;
+    text-transform: lowercase;
+    color: var(--text-color);
+}
+
+p {
+    margin-bottom: 40px;
+    font-size: 16px;
+    color: var(--text-color);
+    padding: 0 100px;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 40px;
+    border: 2px solid var(--primary-color);
+    color: var(--text-color);
+    background: var(--primary-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: none;
+    color: var(--primary-color);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-home {
+    display: flex;
+}
+
+.btn-home a {
+    margin: 0 10px;
+}
+
+/* Estilos generales de contenido */
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.sau {
+    background: #1f1d1f;
+}
+
+.box-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.box-container .box {
+    height: 11rem;
+    width: 17rem;
+    background: #101010;
+    border-radius: 1rem;
+    box-shadow: 0 0.3rem 5rem rgba(0, 0, 0, 0.5);
+    margin: 2rem;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.box-container .box:hover {
+    transform: translateY(-10px);
+}
+
+.box-container .box i {
+    height: 3rem;
+    width: 3rem;
+    line-height: 3rem;
+    text-align: center;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: var(--text-color);
+    font-size: 2rem;
+    margin: 1rem 0;
+}
+
+.box-container .box h3 {
+    font-size: 20px;
+    color: var(--primary-color);
+    text-transform: lowercase;
+}
+
+.box-container .box p {
+    padding: 0 15px;
+    font-size: 16px;
+}
+
+/* Secciones específicas */
+.about {
+    background: var(--secondary-color);
+}
+
+.price {
+    background: url(img/precio.jpg) no-repeat center;
+    background-attachment: fixed;
+    text-align: center;
+    background-size: cover;
+}
+
+.contact {
+    padding-top: 20px;
+    background: var(--secondary-color);
+    padding-bottom: 0;
+}
+
+/* Carrito de compras */
+#cart-icon {
+    position: relative;
+    color: var(--text-color);
+    font-size: 20px;
+    text-decoration: none;
+    margin-left: 15px;
+}
+
+#cart-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: var(--primary-color);
+    color: var(--text-color);
+    border-radius: 50%;
+    font-size: 12px;
+    padding: 2px 6px;
+}
+
+.cart-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 400px;
+    background: #101010;
+    color: var(--text-color);
+    border-radius: 10px;
+    padding: 20px;
+    z-index: 1000;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.cart-modal .cart-content {
+    text-align: left;
+}
+
+.cart-modal ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.cart-modal ul li {
+    margin-bottom: 10px;
+}
+
+#close-cart {
+    margin-top: 10px;
+    background: var(--primary-color);
+    color: var(--text-color);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#close-cart:hover {
+    background: var(--hover-color);
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+    .title {
+        margin-bottom: 0;
+        font-size: 40px;
+    }
+
+    .navbar {
+        display: none;
+    }
+
+    .sau {
+        height: auto;
+    }
+}
+
+.social-media {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.social-media a {
+    color: var(--text-color);
+    font-size: 24px;
+    transition: color 0.3s ease;
+}
+
+.social-media a:hover {
+    color: var(--primary-color);
+}
+
+.footer {
+    background: var(--secondary-color);
+    color: var(--text-color);
+    padding: 20px 10px;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.footer p {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.footer-logo {
+    height: 80px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.cart-modal .cart-content h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-transform: lowercase;
+}
+
+.cart-modal .cart-content ul {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+/* Ajuste de anclaje para secciones */
+.content {
+    scroll-margin-top: 80px; /* Altura ajustada para el encabezado fijo */
+}
+
+/* Botón de agregar al carrito */
+.add-to-cart-btn {
+    background: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover para el botón */
+.add-to-cart-btn:hover {
+    background: var(--hover-color);
+}
+
+/* Efecto visual al hacer clic */
+.add-to-cart-btn:active {
+    transform: scale(0.95);
+}
+
+

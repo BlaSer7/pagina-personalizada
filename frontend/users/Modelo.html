@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pedidos de Poleras</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+      .product-card {
+        background: #fff;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: center;
+      }
+      .product-card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+      .product-card h3 {
+        margin: 10px 0;
+      }
+      .product-card p {
+        color: #555;
+        margin: 5px 0;
+      }
+      .product-card button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .product-card button:hover {
+        background-color: #0056b3;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+      }
+      .modal-content {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        width: 300px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      .modal-content input,
+      .modal-content select,
+      .modal-content button {
+        width: 100%;
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .modal-content button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+      }
+      .modal-content button:hover {
+        background-color: #218838;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center">Pedidos de Poleras</h1>
+    <div class="container">
+      <!-- 9 tarjetas de productos -->
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150" alt="Polera" />
+        <h3>Polera 1</h3>
+        <p>Descripción: Polera de calidad</p>
+        <p>Precio: Bs. 100</p>
+        <p>Talla: M</p>
+        <button
+          onclick="openModal('Polera 1', 'Polera de calidad', 'Bs. 100', 'M', 'https://via.placeholder.com/150')"
+        >
+          Registrar Pedido
+        </button>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150" alt="Polera" />
+        <h3>Polera 2</h3>
+        <p>Descripción: Polera deportiva</p>
+        <p>Precio: Bs. 120</p>
+        <p>Talla: L</p>
+        <button
+          onclick="openModal('Polera 2', 'Polera deportiva', 'Bs. 120', 'L', 'https://via.placeholder.com/150')"
+        >
+          Registrar Pedido
+        </button>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150" alt="Polera" />
+        <h3>Polera 3</h3>
+        <p>Descripción: Polera casual</p>
+        <p>Precio: Bs. 110</p>
+        <p>Talla: S</p>
+        <button
+          onclick="openModal('Polera 3', 'Polera casual', 'Bs. 110', 'S', 'https://via.placeholder.com/150')"
+        >
+          Registrar Pedido
+        </button>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150" alt="Polera" />
+        <h3>Polera 4</h3>
+        <p>Descripción: Polera elegante</p>
+        <p>Precio: Bs. 130</p>
+        <p>Talla: XL</p>
+        <button
+          onclick="openModal('Polera 4', 'Polera elegante', 'Bs. 130', 'XL', 'https://via.placeholder.com/150')"
+        >
+          Registrar Pedido
+        </button>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150" alt="Polera" />
+        <h3>Polera 5</h3>
+        <p>Descripción: Polera básica</p>
+        <p>Precio: Bs. 90</p>
+        <p>Talla: M</p>
+        <button
+          onclick="openModal('Polera 5', 'Polera básica', 'Bs. 90', 'M', 'https://via.placeholder.com/150')"
+        >
+          Registrar Pedido
+        </button>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150" alt="Polera" />
+        <h3>Polera 6</h3>
+        <p>Descripción: Polera unisex</p>
+        <p>Precio: Bs. 105</p>
+        <p>Talla: L</p>
+        <button
+          onclick="openModal('Polera 6', 'Polera unisex', 'Bs. 105', 'L', 'https://via.placeholder.com/150')"
+        >
+          Registrar Pedido
+        </button>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150" alt="Polera" />
+        <h3>Polera 7</h3>
+        <p>Descripción: Polera premium</p>
+        <p>Precio: Bs. 150</p>
+        <p>Talla: S</p>
+        <button
+          onclick="openModal('Polera 7', 'Polera premium', 'Bs. 150', 'S', 'https://via.placeholder.com/150')"
+        >
+          Registrar Pedido
+        </button>
+      </div>
+      <div class="product-card">
+        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.tiktok.com%2F%40otakuperuano2024%2Fvideo%2F7445128270779125048&psig=AOvVaw2tQinzle6L7PaiW-MUk4GN&ust=1734995119897000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCOjT6M--vIoDFQAAAAAdAAAAABAE" alt="Polera" />
+        <h3>Polera 8</h3>
+        <p>Descripción: Polera deportiva</p>
+        <p>Precio: Bs. 140</p>
+        <p>Talla: M</p>
+        <button
+          onclick="openModal('Polera 8', 'Polera deportiva', 'Bs. 140', 'M', 'https://via.placeholder.com/150')"
+        >
+          Registrar Pedido
+        </button>
+      </div>
+      <div class="product-card">
+        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fag-imagama.com%2Fpoleras-personalizadas%2F&psig=AOvVaw1Lg97sYH8qm9-48JV_InX4&ust=1734995007620000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCOCM6Ju-vIoDFQAAAAAdAAAAABAE" alt="Polera" />
+        <h3>Polera 9</h3>
+        <p>Descripción: Polera especial</p>
+        <p>Precio: Bs. 125</p>
+        <p>Talla: XL</p>
+        <button
+          onclick="openModal('Polera 9', 'Polera especial', 'Bs. 125', 'XL', 'https://via.placeholder.com/150')"
+        >
+          Registrar Pedido
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal para registrar pedido -->
+    <div class="modal" id="pedidoModal">
+      <div class="modal-content">
+        <h3>Registrar Pedido</h3>
+        <input type="text" id="nombre" placeholder="Nombre" required />
+        <input type="text" id="apellido" placeholder="Apellido" required />
+        <input type="tel" id="telefono" placeholder="Teléfono" required />
+        <input type="text" id="direccion" placeholder="Dirección" required />
+        <select id="talla">
+          <option value="" disabled selected>Selecciona la Talla</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+        </select>
+        <button onclick="enviarPedido()">Enviar Pedido</button>
+        <button onclick="closeModal()">Cancelar</button>
+      </div>
+    </div>
+
+    <script>
+      let selectedProduct = {};
+
+      // Abrir modal
+      function openModal(
+        nombreProducto,
+        descripcionProducto,
+        precioProducto,
+        tallaProducto,
+        imagenProducto
+      ) {
+        document.getElementById("pedidoModal").style.display = "flex";
+        document.getElementById("talla").value = tallaProducto; // Preseleccionar talla
+
+        // Guardar datos del producto seleccionado
+        selectedProduct = {
+          nombre: nombreProducto,
+          descripcion: descripcionProducto,
+          precio: precioProducto,
+          talla: tallaProducto,
+          imagen: imagenProducto,
+        };
+      }
+
+      // Cerrar modal
+      function closeModal() {
+        document.getElementById("pedidoModal").style.display = "none";
+      }
+
+      // Enviar pedido
+      function enviarPedido() {
+        const pedido = {
+          nombre: document.getElementById("nombre").value,
+          apellido: document.getElementById("apellido").value,
+          telefono: document.getElementById("telefono").value,
+          direccion: document.getElementById("direccion").value,
+          nombre_producto: selectedProduct.nombre,
+          descripcion_producto: selectedProduct.descripcion,
+          precio_producto: selectedProduct.precio,
+          talla_producto: selectedProduct.talla,
+        };
+
+        fetch("http://127.0.0.1:8080/orders/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(pedido),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.message === "Pedido registrado exitosamente") {
+              alert(data.message);
+              closeModal();
+            } else {
+              alert("Error: " + data.message);
+            }
+          })
+          .catch((error) => {
+            console.error("Error al conectar con el servidor:", error);
+            alert("Error al conectar con el servidor.");
+          });
+      }
+    </script>
+  </body>
+</html>
